@@ -114,53 +114,20 @@ public class PracticalTest02MainActivity extends Activity {
                     httpPost.setEntity(urlEncodedFormEntity);
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     String pageSourceCode = httpClient.execute(httpPost, responseHandler);
-                    
-                    /*
-                    if (pageSourceCode != null) {
-                        Document document = Jsoup.parse(pageSourceCode);
-                        Element element = document.child(0);
-                        Elements scripts = element.getElementsByTag(Constants.SCRIPT_TAG);
-                        for (Element script : scripts) {
-                            String scriptData = script.data();
-                        	Log.v(Constants.TAG, scriptData);
-                        }
-                    }
-                    */
-                    
-                    String result = "";
+                    String substring = "";
                     
                     if (pageSourceCode != null) {
-                        Document document = Jsoup.parse(pageSourceCode);
-                        Element element = document.child(0);
-                        Elements scripts = element.getElementsByTag(Constants.SCRIPT_TAG);
-                        for (Element script : scripts) {
-
-                            String scriptData = script.data();
-                            result += " " + scriptData;
-                            /*
-                            if (scriptData.contains(Constants.SEARCH_KEY)) {
-                                int position = scriptData.indexOf(Constants.SEARCH_KEY) + Constants.SEARCH_KEY.length();
-                                scriptData = scriptData.substring(position);
-
-                                JSONObject content = new JSONObject(scriptData);
-
-                                JSONObject currentObservation = content.getJSONObject(Constants.CURRENT_OBSERVATION);
-                                String temperature = currentObservation.getString(Constants.TEMPERATURE);
-                                String windSpeed = currentObservation.getString(Constants.WIND_SPEED);
-                                String condition = currentObservation.getString(Constants.CONDITION);
-                                String pressure = currentObservation.getString(Constants.PRESSURE);
-                                String humidity = currentObservation.getString(Constants.HUMIDITY);
-
-                                break;
-                            }
-                            */
-                        }
+                        //Document document = Jsoup.parse(pageSourceCode);
+                        int pos = pageSourceCode.indexOf("<WordDefinition>");
+                        substring = pageSourceCode.substring(pos+16);
+                        pos = substring.indexOf("</WordDefinition>");
+                        substring = substring.substring(0,pos);
+                        
                     } else {
                         Log.e(Constants.TAG, "[COMMUNICATION THREAD] Error getting the information from the webservice!");
                     }
                     
-                    //String result = pageSourceCode;
-                    //String result = "sss";
+                    String result = substring;
                     printWriter.println(result);
                     printWriter.flush();
                     
@@ -182,7 +149,6 @@ public class PracticalTest02MainActivity extends Activity {
 	        private String address;
 	        private int port;
 	        private String city;
-	        private String informationType;
 	        private TextView weatherForecastTextView;
 
 	        private Socket socket;
@@ -211,14 +177,13 @@ public class PracticalTest02MainActivity extends Activity {
 	                if (bufferedReader != null && printWriter != null) {
 	                    printWriter.println(city);
 	                    printWriter.flush();
-	                    printWriter.println(informationType);
-	                    printWriter.flush();
 	                    String weatherInformation;
 	                    while ((weatherInformation = bufferedReader.readLine()) != null) {
 	                        final String finalizedWeatherInformation = weatherInformation;
 	                        weatherForecastTextView.post(new Runnable() {
 	                            @Override
 	                            public void run() {
+	                            	//weatherForecastTextView.setText("");
 	                                weatherForecastTextView.append(finalizedWeatherInformation + "\n");
 	                            }
 	                        });
@@ -338,6 +303,8 @@ public class PracticalTest02MainActivity extends Activity {
 	            }
 
 	            String city = cityEditText.getText().toString();
+	            
+	            clientTextView.setText("");
 	            
 	            Log.v(Constants.TAG, city + "...");
 	            clientThread = new ClientThread(

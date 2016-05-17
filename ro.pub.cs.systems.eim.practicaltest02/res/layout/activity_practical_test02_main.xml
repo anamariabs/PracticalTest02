@@ -28,8 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:text="2016" >
+            android:ems="10" >
 
             <requestFocus />
         </EditText>
@@ -59,8 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Adress"
-            android:text="localhost" />
+            android:hint="Adress" />
 
         <Button
             android:id="@+id/button2"
@@ -80,8 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Port"
-            android:text="2016" />
+            android:hint="Port" />
 
         <EditText
             android:id="@+id/editText4"
@@ -89,8 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Word"
-            android:text="House" />
+            android:hint="Word" />
 
     </LinearLayout>
 
