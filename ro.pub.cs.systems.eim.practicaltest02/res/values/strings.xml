@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">" PracticalTest02"</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="server">SERVER</string>
+    <string name="client">CLIENT</string>
+    <string-array name="methods">
+        <item>temperature</item>
+        <item>condition</item>
+        <item>wind_speed</item>
+        <item>pressure</item>
+        <item>humidity</item>
+        <item>all</item>
+    </string-array>
+
+</resources>
